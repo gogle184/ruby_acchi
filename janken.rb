@@ -1,5 +1,7 @@
-puts "最初はグー"
+#追加　33行目、36行目、65行目 1/7
 
+puts "最初はグー"
+janken_result = 0
 
 def janken
   
@@ -28,14 +30,17 @@ def janken
     puts "仕切り直しです"
     return true
   #勝ちの処理
-  elsif (player_hand == 0 && program_hand == 1)||(player_hand = 1 && program_hand == 2)||(player_hand == 2 && program_hand == 0)
+  #指摘について・・・２つ目のplayerの=が一つになっていました・・・
+  #相手がパーを出すと自分が後出しでチョキを出すとんでも仕様になってました。
+  elsif (player_hand == 0 && program_hand == 1)||(player_hand == 1 && program_hand == 2)||(player_hand == 2 && program_hand == 0)
     #あっち向いての処理
-    @janken_result = "win"
-    p acchi
+    @janken_result = 1
+    #追加:aで呼び出すと"出力してしまうと考え、returnにしました。"
+    return acchi
   #負けの処理
   else
-    @janken_result = "lose"
-    p acchi
+    @janken_result = 2
+    return acchi
   end
 end
 
@@ -59,15 +64,16 @@ def acchi
     puts "ホイ！(あなた:#{directions[player_select]})"
     puts "ほい！(相手:#{directions[program_select]})"
     #ジャンケンで勝つ、あっち向いてで勝つ
-      if (player_select == program_select) && (@janken_result = "win")
+    #追加：@janken~の==であるはずが一つになっていました。
+      if (player_select == program_select && @janken_result == 1)
        puts "----------"
        puts "あなたの勝ちです。"
-       return false
+       exit
     #ジャンケンで負ける、あっち向いてで負ける
-      elsif (player_select == program_select) && (@janken_result = "lose")
+      elsif (player_select == program_select && @janken_result == 2)
        puts "----------"
-       puts "あなたの負けです。\n機械「俺の勝ち。なんで負けたか明日まで考えてきてください。」"
-       return false
+       puts "あなたの負けです。"
+       exit
     #方向が一致しない
       else
        puts "----------"
